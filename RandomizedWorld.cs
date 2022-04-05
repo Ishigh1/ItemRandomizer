@@ -57,6 +57,8 @@ public class RandomizedWorld : ModSystem
 
 	public static void SetupTranslator()
 	{
+		if (Translator != null) return;
+
 		List<int> legalItems = new();
 		Dictionary<int, List<int>> legalItemsForRarity = new();
 		Item dummy = new();
@@ -67,7 +69,8 @@ public class RandomizedWorld : ModSystem
 		Mod tModLoader = ModLoader.GetMod("ModLoader");
 		for (int itemId = 1; itemId < ItemLoader.ItemCount; itemId++)
 			if (!ItemID.Sets.Deprecated[itemId] && ItemLoader.GetItem(itemId)?.Mod != tModLoader &&
-			    (RandomizerSettings.Instance.PickupItem || !ItemID.Sets.IgnoresEncumberingStone[itemId]))
+			    (!ItemID.Sets.IgnoresEncumberingStone[itemId] || RandomizerSettings.Instance.PickupItem) &&
+			    (itemId != ItemID.Pwnhammer || RandomizerSettings.Instance.Pwnhammer))
 				if (RandomizerSettings.Instance.Rarity)
 				{
 					dummy.SetDefaults(itemId);
@@ -165,25 +168,29 @@ public class RandomizedWorld : ModSystem
 			tasks.Add(new PassLegacy("Randomize Chests", RandomizeChests, 1));
 			totalWeight += 1;
 		}
+
+		if (RandomizerSettings.Instance.UniquePowerCell)
+		{
+			tasks.Add(new PassLegacy("Add a cell", AddCell, 1));
+			totalWeight += 1;
+		}
 	}
 
 	public static void RandomizeChests(GenerationProgress progress, GameConfiguration configuration)
 	{
-		SetupTranslator();
-		progress.Set(1 / 3f);
+		foreach (Item item in Main.chest.Where(chest => chest != null).SelectMany(chest => chest.item))
+			TranslateItem(item);
+	}
+
+	private static void AddCell(GenerationProgress progress, GameConfiguration configuration)
+	{
 		HashSet<int> chests = new();
 		for (int index = 0; index < Main.chest.Length; index++)
 		{
 			Chest chest = Main.chest[index];
-			if (chest != null)
-			{
-				chests.Add(index);
-				foreach (Item item in chest.item)
-					TranslateItem(item);
-			}
+			if (chest != null) chests.Add(index);
 		}
 
-		progress.Set(2 / 3f);
 		Chest cellContainer = Main.chest[chests.ElementAt(WorldGen.genRand.Next(chests.Count))];
 		Item cell = cellContainer.item.First(item => item.IsAir);
 		cell.SetDefaults(ItemID.LihzahrdPowerCell);

@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using Terraria;
+using Terraria.Audio;
+using Terraria.ID;
 using Terraria.ModLoader;
 using OnCommonCode = On.Terraria.GameContent.ItemDropRules.CommonCode;
 using OnItem = On.Terraria.Item;
@@ -7,6 +9,7 @@ using OnPlayer = On.Terraria.Player;
 using OnLang = On.Terraria.Lang;
 using OnNPC = On.Terraria.NPC;
 using OnWorldGen = On.Terraria.WorldGen;
+using OnMain = On.Terraria.Main;
 
 namespace ItemRandomizer;
 
@@ -17,6 +20,12 @@ public class ItemRandomizer : Mod
 	public static Dictionary<int, int> Dropables;
 
 	public override void Load()
+	{
+		BaseEdit();
+		DoabilityEdit();
+	}
+
+	private static void BaseEdit()
 	{
 		OnItem.SetDefaults_int_bool += (orig, self, type, check) =>
 		{
@@ -218,6 +227,37 @@ public class ItemRandomizer : Mod
 			(orig, ballooned) => RandomizerSettings.Instance.Loot
 				? RandomizedWorld.Translator[orig(ballooned)]
 				: orig(ballooned);
+	}
+
+	private static void DoabilityEdit()
+	{
+		OnMain.UpdateTime_StartNight += (OnMain.orig_UpdateTime_StartNight orig, ref bool events) =>
+		{
+			if (!RandomizerSettings.Instance.DirectMecha)
+				orig(ref events);
+			else
+			{
+				WorldGen.altarCount += 3;
+				orig(ref events);
+				WorldGen.altarCount -= 3;
+			}
+		};
+
+		OnPlayer.TileInteractionsUse += (orig, self, x, y) =>
+		{
+			if (RandomizerSettings.Instance.UnrequirePowerCell && NPC.downedPlantBoss && Main.tile[x, y].TileType == TileID.LihzahrdAltar)
+			{
+				SoundEngine.PlaySound(SoundID.Roar, (int)self.position.X, (int)self.position.Y, 0);
+				if (Main.netMode != NetmodeID.MultiplayerClient)
+					NPC.SpawnOnPlayer(self.whoAmI, NPCID.Golem);
+				else
+					NetMessage.SendData(MessageID.SpawnBoss, -1, -1, null, self.whoAmI, NPCID.Golem);
+			}
+			else
+			{
+				orig(self, x, y);
+			}
+		};
 	}
 
 	public override void PostSetupContent()

@@ -32,6 +32,30 @@
                         "Label": "Allow pickup items",
                         "Tooltip": "Items like hearts or mana stars are part of the randomization"
                     }
+                },
+                "Doability": {
+                    "Pwnhammer": {
+                        "Label": "Randomize Pwnhammer",
+                        "Tooltip": "Allow the randomizer to be part of the randomization, but you are likely to not get it from the WoF"
+                    },
+                    "DirectMecha": {
+                        "Label": "Allow mech bosses to spawn immediately",
+                        "Tooltip": "Altars will no longer require to be broken in order to allow the mech bosses to spawn naturally"
+                    },
+                    "UniquePowerCell": {
+                        "Label": "Power cell in chest",
+                        "Tooltip": "Add a power cell to a random chest when the world generates"
+                    },
+                    "SellablePowerCell": {
+                        "Label": "Cyborg cells power cells"
+                    },
+                    "DontConsumePowerCell": {
+                        "Label": "Don't consume power cell on golem summon"
+                    },
+                    "UnrequirePowerCell": {
+                        "Label": "Unpowered golem",
+                        "Tooltip": "Golem can be summoned with a right click on the altars world, without requiring a power cell"
+                    }
                 }
             }
         }

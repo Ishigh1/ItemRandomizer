@@ -1,6 +1,6 @@
 There are few randomizers for Terraria already, this one aims to be closer to the randomizers you can find in other games.
 In this one, every item is consistently randomized into another only when it is created, either by craft, by loot or opening containers, not by destroying a tile that would make you recover the item usually.
 
-The randomization doesn't affect the starting items of the players and depends on the world seed so reloads won't affect the run and a single lihzahrd power cell is placed in a random chest in every world to make sure it is beatable.
+The randomization doesn't affect the starting items of the players and depends on the world seed so reloads won't affect the run and some settings are available to make sure the game is beatable or to make it easier.
 
 Also thanks to Setnour6 for making the mod icon

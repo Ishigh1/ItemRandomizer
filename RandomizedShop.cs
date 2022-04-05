@@ -1,4 +1,5 @@
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace ItemRandomizer;
@@ -18,5 +19,7 @@ public class RandomizedShop : GlobalNPC
 				item.shopCustomPrice = price;
 				item.shopSpecialCurrency = currency;
 			}
+
+		if (RandomizerSettings.Instance.SellablePowerCell) shop.item[nextSlot++].SetDefaults(ItemID.LihzahrdPowerCell);
 	}
 }
