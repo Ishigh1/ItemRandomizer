@@ -1,0 +1,39 @@
+{
+    "Mods": {
+        "ItemRandomizer": {
+            "Config": {
+                "SameRarityRandomizing": {
+                    "Label": "Same rarity randomization",
+                    "Tooltip": "Makes so the randomization shuffle item types only with others with the same rarity."
+                },
+                "RandomCategories": {
+                    "Box": {
+                        "Label": "Box randomization"
+                    },
+                    "Craft": {
+                        "Label": "Crafting randomization"
+                    },
+                    "Fish": {
+                        "Label": "Fishing randomization"
+                    },
+                    "Loot": {
+                        "Label": "Monster loot randomization"
+                    },
+                    "Shop": {
+                        "Label": "Shop content randomization"
+                    },
+                    "Terrain": {
+                        "Label": "Terrain-related randomization"
+                    },
+                    "WorldGen": {
+                        "Label": "WorldGen chest randomization"
+                    },
+                    "PickupItem": {
+                        "Label": "Allow pickup items",
+                        "Tooltip": "Items like hearts or mana stars are part of the randomization"
+                    }
+                }
+            }
+        }
+    }
+}

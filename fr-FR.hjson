@@ -1,0 +1,39 @@
+{
+    "Mods": {
+        "ItemRandomizer": {
+            "Config": {
+                "SameRarityRandomizing": {
+                    "Label": "Randomisation sur la même rareté",
+                    "Tooltip": "Fait en sorte qu'un item ne puisse être randomisé qu'avec un autre de même rareté."
+                },
+                "RandomCategories": {
+                    "Box": {
+                        "Label": "Randomisation de conteneur"
+                    },
+                    "Craft": {
+                        "Label": "Randomisation de recettes"
+                    },
+                    "Fish": {
+                        "Label": "Randomisation de pêche"
+                    },
+                    "Loot": {
+                        "Label": "Randomisation de loot de monstres"
+                    },
+                    "Shop": {
+                        "Label": "Randomisation de magasin"
+                    },
+                    "Terrain": {
+                        "Label": "Randomisation liée au terrain"
+                    },
+                    "WorldGen": {
+                        "Label": "Randomisation des coffres"
+                    },
+                    "PickupItem": {
+                        "Label": "Autoriser la randomization des objets ne rentrant pas dans l'inventaire",
+                        "Tooltip": "Les objets comme les coeurs et les étoiles de mana font partie e la randomization."
+                    }
+                }
+            }
+        }
+    }
+}
