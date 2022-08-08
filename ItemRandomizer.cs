@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using OnItemDropResolver = On.Terraria.GameContent.ItemDropRules.ItemDropResolver;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -39,60 +40,17 @@ public class ItemRandomizer : Mod
 			}
 		};
 
-		OnPlayer.QuickSpawnItem_IEntitySource_int_int += (orig, self, source, item, stack) =>
+		OnItemDropResolver.TryDropping += (orig, self, info) =>
 		{
 			if (RandomizerSettings.Instance.Loot)
 			{
 				ToTranslate = true;
-				int returnValue = orig(self, source, item, stack);
-				ToTranslate = false;
-				return returnValue;
-			}
-			else
-			{
-				return orig(self, source, item, stack);
-			}
-		};
-
-		OnPlayer.OpenFishingCrate += (orig, self, type) =>
-		{
-			if (RandomizerSettings.Instance.Box)
-			{
-				ToTranslate = true;
-				orig(self, type);
+				orig(self, info);
 				ToTranslate = false;
 			}
 			else
 			{
-				orig(self, type);
-			}
-		};
-
-		OnPlayer.OpenPresent += (orig, self, type) =>
-		{
-			if (RandomizerSettings.Instance.Box)
-			{
-				ToTranslate = true;
-				orig(self, type);
-				ToTranslate = false;
-			}
-			else
-			{
-				orig(self, type);
-			}
-		};
-
-		OnCommonCode.DropItemFromNPC += (orig, npc, id, stack, scattered) =>
-		{
-			if (RandomizerSettings.Instance.Loot)
-			{
-				ToTranslate = true;
-				orig(npc, id, stack, scattered);
-				ToTranslate = false;
-			}
-			else
-			{
-				orig(npc, id, stack, scattered);
+				orig(self, info);
 			}
 		};
 
@@ -247,7 +205,7 @@ public class ItemRandomizer : Mod
 		{
 			if (RandomizerSettings.Instance.UnrequirePowerCell && NPC.downedPlantBoss && Main.tile[x, y].TileType == TileID.LihzahrdAltar)
 			{
-				SoundEngine.PlaySound(SoundID.Roar, (int)self.position.X, (int)self.position.Y, 0);
+				SoundEngine.PlaySound(SoundID.Roar, self.position);
 				if (Main.netMode != NetmodeID.MultiplayerClient)
 					NPC.SpawnOnPlayer(self.whoAmI, NPCID.Golem);
 				else
